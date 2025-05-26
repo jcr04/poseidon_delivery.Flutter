@@ -1,0 +1,31 @@
+name: poseidon_delivery
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  carousel_slider: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - lib/assets/images/Logo.png
+    - lib/assets/images/GalãodeÁgua20L.jpg
+    - lib/assets/images/apresentaçao.png
+    - lib/assets/images/apresentaçao2.png
+    - lib/assets/images/apresentaçao3.png
