@@ -13,6 +13,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   carousel_slider: ^5.0.0
+  provider: ^6.1.5
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +30,13 @@ flutter:
     - lib/assets/images/apresentaçao.png
     - lib/assets/images/apresentaçao2.png
     - lib/assets/images/apresentaçao3.png
+    - lib/assets/images/gas-rosa.jpg
+    - lib/assets/images/AguaMineral1L.png
+    - lib/assets/images/AguaMineral5L.png
+    - lib/assets/images/AguaMineralcomgás1L.png
+    - lib/assets/images/AguaMineral500ml.jpeg
+    - lib/assets/images/AguaMineralcomgás2L.jpeg
+    - lib/assets/images/ÁguaMineralcomgás5L.jpg
+    - lib/assets/images/ÁguaMineralcomgás500mL.png
+    - lib/assets/images/AguaOuroFino.jpg
+    

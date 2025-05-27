@@ -1,16 +1,18 @@
 # poseidon_delivery
 
-A new Flutter project.
+Bem vndo ao Poseidon Delivery seu Jeito Fácil de ser agraciado pelo Deus do Mares.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Esse é um projeto feito em flutter e está em construção até o momento vou mostrar o que já foi feito
 
-A few resources to get you started if this is your first Flutter project:
+### Tela de carrosel
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![carrosel](Screenshot_2.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tela de produtos
+![Produtos](Screenshot_3.png)
+
+## Tela de pagamentos ainda em construção
+
+![Pagamentos](Screenshot_4.png)

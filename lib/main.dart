@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/views/screens/cart_screen.dart';
+import 'package:provider/provider.dart';
 import 'views/screens/home_screen.dart';
 
 void main() {
-  runApp(const PoseidonDeliveryApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartViewModel()),
+      ],
+      child: const PoseidonDeliveryApp(),
+    ),
+  );
 }
-
 class PoseidonDeliveryApp extends StatelessWidget {
   const PoseidonDeliveryApp({super.key});
 
@@ -19,13 +28,12 @@ class PoseidonDeliveryApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey[100],
         fontFamily: 'Roboto',
       ),
-      home: HomeScreen(),
-      // Futuramente, adicione rotas aqui:
-      // routes: {
-      //   '/produtos': (context) => ProdutosScreen(),
-      //   '/checkout': (context) => CheckoutScreen(),
-      //   // etc...
-      // },
+      initialRoute: '/', // Use initialRoute ao invés de home
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/cart': (context) => const CartScreen(),
+        // Exemplo: '/colaboradores': (context) => ColaboradoresScreen(),
+      },
     );
   }
 }

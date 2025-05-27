@@ -20,9 +20,30 @@ class CustomHeader extends StatelessWidget {
           // Navegação
           Row(
             children: [
-              _HeaderButton('Produtos', onTap: () {/*navegar*/}),
-              _HeaderButton('Carrinho', onTap: () {/*navegar*/}),
-              _HeaderButton('Colaboradores', onTap: () {/*navegar*/}),
+              _HeaderButton(
+                'Produtos',
+                onTap: () {
+                  if (ModalRoute.of(context)?.settings.name != '/') {
+                    Navigator.pushNamed(context, '/');
+                  }
+                },
+              ),
+              _HeaderButton(
+                'Carrinho',
+                onTap: () {
+                  if (ModalRoute.of(context)?.settings.name != '/cart') {
+                    Navigator.pushNamed(context, '/cart');
+                  }
+                },
+              ),
+              _HeaderButton(
+                'Colaboradores',
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Página de Colaboradores em breve!')),
+                  );
+                },
+              ),
             ],
           )
         ],

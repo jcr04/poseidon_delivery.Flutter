@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:provider/provider.dart';
 import '../../models/product.dart';
 
 class ProductCatalog extends StatelessWidget {
@@ -38,8 +40,14 @@ class ProductCatalog extends StatelessWidget {
                     child: Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Text('R\$${product.price.toStringAsFixed(2)}'),
-                  TextButton(onPressed: () {/* ver detalhes */}, child: const Text('Ver detalhes')),
-                  ElevatedButton(onPressed: () {/* add carrinho */}, child: const Text('Adicionar ao Carrinho')),
+                  ElevatedButton(
+                    onPressed: () {
+                      Provider.of<CartViewModel>(context, listen: false)
+                          .addToCart(product);
+                      Navigator.pushNamed(context, '/cart');
+                    },
+                    child: const Text('Adicionar ao Carrinho'),
+                  ),
                 ],
               ),
             );
