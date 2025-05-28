@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/viewmodel/pix_viwmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import '../components/header.dart';
 
 class CartScreen extends StatefulWidget {
@@ -98,8 +100,63 @@ class _CartScreenState extends State<CartScreen> {
                         RadioListTile<String>(
                           value: 'Pix',
                           groupValue: paymentMethod,
-                          onChanged: (val) => setState(() => paymentMethod = val!),
+                          onChanged: (val) {
+                            setState(() => paymentMethod = val!);
+                            if (val == 'Pix') {
+                              Provider.of<PixViewModel>(context, listen: false).generatePixCode();
+                            }
+                          },
                           title: const Text('Pix'),
+                        ),
+
+                        if (paymentMethod == 'Pix') Consumer<PixViewModel>(
+                          builder: (context, pix, _) {
+                            if (pix.pixCode == null) {
+                              return const SizedBox.shrink();
+                            }
+                            return Column(
+                              children: [
+                                QrImageView(
+                                  data: pix.pixCode!,
+                                  size: 180,
+                                  backgroundColor: Colors.white,
+                                ),
+                                const SizedBox(height: 8),
+                                SelectableText(
+                                  pix.pixCode!,
+                                  style: const TextStyle(fontSize: 14, fontFamily: 'monospace'),
+                                ),
+                                const SizedBox(height: 8),
+                                if (!pix.copied && !pix.paymentSuccess)
+                                  ElevatedButton.icon(
+                                    icon: const Icon(Icons.copy),
+                                    label: const Text('Copiar código Pix'),
+                                    onPressed: () {
+                                      pix.copyPixCode();
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Código Pix copiado! Aguarde confirmação...')),
+                                      );
+                                    },
+                                  ),
+                                if (pix.copied && !pix.paymentSuccess)
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Processando pagamento...',
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+                                    ),
+                                  ),
+                                if (pix.paymentSuccess)
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Pagamento Efetuado com sucesso!',
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
                         ),
                         RadioListTile<String>(
                           value: 'Cartão de Crédito',

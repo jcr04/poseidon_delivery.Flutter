@@ -42,9 +42,10 @@ class ProductCatalog extends StatelessWidget {
                   Text('R\$${product.price.toStringAsFixed(2)}'),
                   ElevatedButton(
                     onPressed: () {
-                      Provider.of<CartViewModel>(context, listen: false)
-                          .addToCart(product);
-                      Navigator.pushNamed(context, '/cart');
+                      Provider.of<CartViewModel>(context, listen: false).addToCart(product);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('${product.name} adicionado ao carrinho!')),
+                      );
                     },
                     child: const Text('Adicionar ao Carrinho'),
                   ),

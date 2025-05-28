@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/viewmodel/pix_viwmodel.dart';
 import 'package:poseidon_delivery/views/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 import 'views/screens/home_screen.dart';
@@ -9,6 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CartViewModel()),
+        ChangeNotifierProvider(create: (_) => PixViewModel()),
       ],
       child: const PoseidonDeliveryApp(),
     ),
@@ -28,11 +30,10 @@ class PoseidonDeliveryApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey[100],
         fontFamily: 'Roboto',
       ),
-      initialRoute: '/', // Use initialRoute ao invés de home
+      initialRoute: '/',
       routes: {
         '/': (context) => HomeScreen(),
         '/cart': (context) => const CartScreen(),
-        // Exemplo: '/colaboradores': (context) => ColaboradoresScreen(),
       },
     );
   }
