@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/viewmodel/debito_viewmodel.dart';
 import 'package:poseidon_delivery/viewmodel/pix_viwmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -98,16 +99,17 @@ class _CartScreenState extends State<CartScreen> {
                               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                         ),
                         RadioListTile<String>(
-                          value: 'Pix',
-                          groupValue: paymentMethod,
-                          onChanged: (val) {
-                            setState(() => paymentMethod = val!);
-                            if (val == 'Pix') {
-                              Provider.of<PixViewModel>(context, listen: false).generatePixCode();
-                            }
-                          },
-                          title: const Text('Pix'),
-                        ),
+                              value: 'Pix',
+                              groupValue: paymentMethod,
+                              onChanged: (val) {
+                                setState(() => paymentMethod = val!);
+                                if (val == 'Pix') {
+                                  Provider.of<PixViewModel>(context, listen: false).generatePixCode();
+                                }
+                                Provider.of<DebitoViewModel>(context, listen: false).reset();
+                              },
+                              title: const Text('Pix'),
+                            ),
 
                         if (paymentMethod == 'Pix') Consumer<PixViewModel>(
                           builder: (context, pix, _) {
@@ -159,17 +161,103 @@ class _CartScreenState extends State<CartScreen> {
                           },
                         ),
                         RadioListTile<String>(
-                          value: 'Cartão de Crédito',
+                          value: 'Cartão',
                           groupValue: paymentMethod,
-                          onChanged: (val) => setState(() => paymentMethod = val!),
-                          title: const Text('Cartão de Crédito'),
+                          onChanged: (val) {
+                            setState(() => paymentMethod = val!);
+                            Provider.of<PixViewModel>(context, listen: false).reset();
+                          },
+                          title: const Text('Cartão'),
                         ),
-                        RadioListTile<String>(
-                          value: 'Cartão de Débito',
-                          groupValue: paymentMethod,
-                          onChanged: (val) => setState(() => paymentMethod = val!),
-                          title: const Text('Cartão de Débito'),
-                        ),
+                        if (paymentMethod == 'Cartão') ...[
+                            Consumer<DebitoViewModel>(
+                              builder: (context, debito, _) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Escolha o tipo:",
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Radio<CardPaymentType>(
+                                          value: CardPaymentType.debito,
+                                          groupValue: debito.paymentType,
+                                          onChanged: (val) {
+                                            debito.selectPaymentType(val!);
+                                            setState(() {});
+                                          },
+                                        ),
+                                        const Text('Débito'),
+                                        Radio<CardPaymentType>(
+                                          value: CardPaymentType.credito,
+                                          groupValue: debito.paymentType,
+                                          onChanged: (val) {
+                                            debito.selectPaymentType(val!);
+                                            setState(() {});
+                                          },
+                                        ),
+                                        const Text('Crédito'),
+                                      ],
+                                    ),
+                                    TextField(
+                                      decoration: const InputDecoration(labelText: "Número do Cartão"),
+                                      keyboardType: TextInputType.number,
+                                      maxLength: 19,
+                                      onChanged: debito.setCardNumber,
+                                    ),
+                                    TextField(
+                                      decoration: const InputDecoration(labelText: "Nome impresso no Cartão"),
+                                      onChanged: debito.setCardHolder,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextField(
+                                            decoration: const InputDecoration(labelText: "Validade (MM/AA)"),
+                                            maxLength: 5,
+                                            keyboardType: TextInputType.number,
+                                            onChanged: debito.setCardExpiry,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: TextField(
+                                            decoration: const InputDecoration(labelText: "CVV"),
+                                            maxLength: 3,
+                                            keyboardType: TextInputType.number,
+                                            onChanged: debito.setCardCVV,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    if (debito.errorMsg != null)
+                                      Text(debito.errorMsg!, style: const TextStyle(color: Colors.red)),
+                                    const SizedBox(height: 12),
+                                    if (debito.isProcessing)
+                                      const Center(child: CircularProgressIndicator()),
+                                    if (debito.isSuccess)
+                                      const Center(
+                                        child: Text(
+                                          "Pagamento efetuado com sucesso!",
+                                          style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    if (!debito.isProcessing && !debito.isSuccess)
+                                      ElevatedButton(
+                                        onPressed: debito.isCardValid
+                                            ? () async {
+                                                await debito.processPayment();
+                                              }
+                                            : null,
+                                        child: const Text("Pagar"),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
                         const SizedBox(height: 16),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(

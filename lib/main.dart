@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/viewmodel/debito_viewmodel.dart';
 import 'package:poseidon_delivery/viewmodel/pix_viwmodel.dart';
 import 'package:poseidon_delivery/views/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => CartViewModel()),
         ChangeNotifierProvider(create: (_) => PixViewModel()),
+        ChangeNotifierProvider(create: (_) => DebitoViewModel()),
       ],
       child: const PoseidonDeliveryApp(),
     ),
