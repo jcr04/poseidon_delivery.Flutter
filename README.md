@@ -42,3 +42,16 @@ com o pagamento confirmado o cliente terá as benções de Poseidon e finalizar 
 
 esse evento pode ser consumido via SSE
 
+## Tela de colaboradores (Entregas)
+![Tela_colaborador](https://github.com/user-attachments/assets/0b1bfe01-f6d5-48aa-a94c-96f8ec4a21c5)
+Nessa tela o cliente poderá escolher onde vai querer que o produto seja entregue
+
+![Colaboradores](https://github.com/user-attachments/assets/4aacb92e-1604-4c27-a80c-8ca38f5d5f6d)
+O cliente poderá escolher qual colaborador do Deus dos mares fará a entrega divina.
+
+![Screenshot_14](https://github.com/user-attachments/assets/3b6ca9af-b70d-4afb-8f5a-848abe3ceba7)
+ao escolher ficará salvo a data da entrega.
+
+
+
+
