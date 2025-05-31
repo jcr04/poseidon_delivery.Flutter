@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/viewmodel/colaboradores_viewmodel.dart';
 import 'package:poseidon_delivery/viewmodel/debito_viewmodel.dart';
 import 'package:poseidon_delivery/viewmodel/pix_viwmodel.dart';
 import 'package:provider/provider.dart';
@@ -260,20 +261,27 @@ class _CartScreenState extends State<CartScreen> {
                           ],
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-                            textStyle: const TextStyle(fontSize: 18),
-                          ),
-                          onPressed: () {
-                            cart.clear();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Compra finalizada!')),
-                            );
-                          },
-                          child: const Text('Finalizar Compra'),
-                        ),
+                        onPressed: () {
+                          final cart = Provider.of<CartViewModel>(context, listen: false);
+                          final colaboradores = Provider.of<ColaboradoresViewModel>(context, listen: false);
+
+                          colaboradores.adicionarPedido(
+                            PedidoFinalizado(
+                              produtos: cart.items.map((item) => item.product.name).toList(),
+                              total: cart.total,
+                              endereco: "",
+                              transportadora: "",
+                              data: DateTime.now(),
+                            ),
+                          );
+                          cart.clear();
+                          Navigator.pushNamed(context, '/colaboradores');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Compra finalizada! Preencha os dados de entrega.')),
+                          );
+                        },
+                        child: const Text('Finalizar Compra'),
+                      ),
                       ],
                     ),
                 ],

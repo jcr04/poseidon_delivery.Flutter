@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/viewmodel/colaboradores_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class CustomHeader extends StatelessWidget {
@@ -10,6 +11,7 @@ class CustomHeader extends StatelessWidget {
     final cartCount = context.select<CartViewModel, int>(
       (cart) => cart.items.fold(0, (total, item) => total + item.quantity),
     );
+    final pedidosCount = context.watch<ColaboradoresViewModel>().pedidosCount;
 
     return Container(
       color: Colors.lightBlue,
@@ -45,10 +47,11 @@ class CustomHeader extends StatelessWidget {
               _HeaderButton(
                 'Colaboradores',
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Página de Colaboradores em breve!')),
-                  );
+                  if (ModalRoute.of(context)?.settings.name != '/colaboradores') {
+                    Navigator.pushNamed(context, '/colaboradores');
+                  }
                 },
+                count: pedidosCount,
               ),
             ],
           )

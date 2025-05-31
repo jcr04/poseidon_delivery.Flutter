@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:poseidon_delivery/viewmodel/cart_viewmodel.dart';
+import 'package:poseidon_delivery/viewmodel/colaboradores_viewmodel.dart';
 import 'package:poseidon_delivery/viewmodel/debito_viewmodel.dart';
 import 'package:poseidon_delivery/viewmodel/pix_viwmodel.dart';
 import 'package:poseidon_delivery/views/screens/cart_screen.dart';
+import 'package:poseidon_delivery/views/screens/colaboradores_screen.dart';
 import 'package:provider/provider.dart';
 import 'views/screens/home_screen.dart';
 
@@ -13,6 +15,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => CartViewModel()),
         ChangeNotifierProvider(create: (_) => PixViewModel()),
         ChangeNotifierProvider(create: (_) => DebitoViewModel()),
+        ChangeNotifierProvider(create: (_) => ColaboradoresViewModel()),
       ],
       child: const PoseidonDeliveryApp(),
     ),
@@ -36,6 +39,7 @@ class PoseidonDeliveryApp extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/cart': (context) => const CartScreen(),
+        '/colaboradores': (context) => const ColaboradoresScreen(),
       },
     );
   }
