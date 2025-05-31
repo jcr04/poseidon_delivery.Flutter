@@ -13,7 +13,7 @@ Esse é um projeto feito em flutter e está em construção até o momento vou m
 ## Tela de produtos
 ![Produtos](Screenshot_3.png)
 
-## Tela de pagamentos ainda em construção
+## Tela de pagamentos
 
 ![Pagamentos](Screenshot_4.png)
 
@@ -32,4 +32,13 @@ Nessa simulação básica quando o cliente tiver feito o pagamento no seu app de
 
 esse evento pode ser feito via SSE
 
+## Pagamento por cartão
+
+![Simulacao_cartao](https://github.com/user-attachments/assets/19f26c1d-a2c2-407e-8e89-3e00e420a043)
+Ao adicionar o método de cartão o cliente poderá escolher se será débito ou crédito 
+
+![Pagamento_sucedido](https://github.com/user-attachments/assets/79a626e8-8235-47a6-bfa1-6e263c00f76a)
+com o pagamento confirmado o cliente terá as benções de Poseidon e finalizar a compra.
+
+esse evento pode ser consumido via SSE
 
