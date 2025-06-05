@@ -34,7 +34,11 @@ class ProductCatalog extends StatelessWidget {
             return Card(
               child: Column(
                 children: [
-                  Image.asset(product.imageUrl, height: 100),
+                  Image.network(
+                    product.imageUrl,
+                    height: 100,
+                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
